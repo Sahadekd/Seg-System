@@ -1,0 +1,164 @@
+# 🔐 SecureBank — SQL Injection Lab
+
+Projeto acadêmico desenvolvido para demonstrar na prática a vulnerabilidade de SQL Injection em sistemas de login, além de apresentar uma forma correta de mitigação utilizando Prepared Statements.
+
+O sistema possui dois modos de funcionamento:
+
+- 🟥 Modo Vulnerável
+- 🟩 Modo Seguro
+
+No modo vulnerável, o login utiliza concatenação direta de strings SQL, permitindo ataques de SQL Injection.
+
+No modo seguro, o sistema utiliza Prepared Statements (`$1`, `$2`) para impedir a manipulação da query.
+
+---
+
+# 📚 Tecnologias Utilizadas
+
+## 🎨 Frontend
+- React
+- Vite
+- Axios
+
+## ⚙️ Backend
+- Node.js
+- Express
+
+## 🗄️ Banco de Dados
+
+- PostgreSQL
+- Supabase
+
+---
+
+# ▶️ Como Executar
+
+## ⚙️ Backend
+
+Abra um terminal:
+
+```bash
+cd backend
+npm install
+node server.js
+
+http://localhost:4000
+```
+
+---
+
+## 🎨 Frontend
+
+Abra outro terminal:
+
+```bash
+cd frontend
+npm install
+npm run dev
+
+http://localhost:5173
+```
+
+---
+
+# 👤 Login Normal
+
+Credenciais válidas:
+
+## 📧 Email
+```text
+admin@email.com
+```
+
+## 🔑 Senha
+```text
+123456
+```
+
+✅ Resultado esperado:
+```text
+Login realizado com sucesso.
+```
+
+---
+
+# 💀 SQL Injection
+
+Payload utilizada:
+
+```sql
+' OR 1=1 --
+```
+
+## 📧 Email
+
+```text
+admin@email.com
+```
+
+## 🔑 Senha
+
+```sql
+' OR 1=1 --
+```
+
+---
+
+# 🟥 Resultado Esperado — Modo Vulnerável
+
+Com o modo vulnerável ativo:
+
+✅ O login será realizado mesmo sem a senha correta.
+
+A query SQL executada fica semelhante a:
+
+```sql
+SELECT * FROM users
+WHERE email = 'admin@email.com'
+AND password = '' OR 1=1 --'
+```
+
+A condição `OR 1=1` sempre retorna verdadeiro, permitindo o bypass da autenticação.
+
+---
+
+# 🟩 Resultado Esperado — Modo Seguro
+
+Ao clicar em:
+
+```text
+Ativar Proteção
+```
+
+o sistema passa a utilizar Prepared Statements:
+
+```sql
+SELECT * FROM users
+WHERE email = $1
+AND password = $2
+```
+
+❌ Resultado:
+
+O SQL Injection falha.
+
+O sistema interpreta a payload apenas como texto, impedindo a manipulação da query SQL.
+
+---
+
+# 🔒 Conceitos Demonstrados
+
+- SQL Injection
+- Concatenação insegura de queries
+- Prepared Statements
+- Segurança em autenticação
+- Boas práticas de backend
+- Proteção contra bypass de login
+
+---
+
+# 🎓 Finalidade Acadêmica
+
+Este projeto foi desenvolvido exclusivamente para fins educacionais e demonstração prática de vulnerabilidades em aplicações web.
+
+⚠️ Não utilize este projeto em ambientes reais de produção.
