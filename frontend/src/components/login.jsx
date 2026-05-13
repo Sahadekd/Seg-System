@@ -6,31 +6,40 @@ export default function Login() {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [logged, setLogged] = useState(false)
 
   const [secureMode, setSecureMode] = useState(false)
 
+  const [logged, setLogged] = useState(false)
+
   const [logs, setLogs] = useState([])
+
+  function addLog(message) {
+
+    setLogs(prev => [
+      message,
+      ...prev
+    ])
+
+  }
 
   async function handleLogin(e) {
 
     e.preventDefault()
-
-    const route = secureMode
-      ? 'login-secure'
-      : 'login-vulnerable'
 
     try {
 
       addLog('Tentativa de login enviada...')
 
       const response = await axios.post(
-        `http://localhost:4000/${route}`,
+        'http://localhost:4000/login',
         {
           email,
-          password
+          password,
+          secureMode
         }
       )
+
+      console.log(response.data)
 
       if (response.data.success) {
 
@@ -50,17 +59,15 @@ export default function Login() {
 
   }
 
-  function addLog(message) {
-
-    setLogs(prev => [
-      message,
-      ...prev
-    ])
-
-  }
-
   if (logged) {
-    return <Dashboard secureMode={secureMode} />
+
+    return (
+      <Dashboard
+        secureMode={secureMode}
+        setLogged={setLogged}
+      />
+    )
+
   }
 
   return (
@@ -72,13 +79,13 @@ export default function Login() {
         <h1>SecureBank</h1>
 
         <h2>
-          Laboratório de SQL Injection
+          SQL Injection Lab
         </h2>
 
         <p>
           Demonstração prática de vulnerabilidade
-          e mitigação utilizando PostgreSQL,
-          Node.js e React.
+          SQL Injection e mitigação usando
+          prepared statements.
         </p>
 
         <div className={
@@ -112,19 +119,27 @@ export default function Login() {
 
       <div className="right-panel">
 
-        <form className="card" onSubmit={handleLogin}>
+        <form
+          className="card"
+          onSubmit={handleLogin}
+          autoComplete="off"
+        >
 
           <h2>Login</h2>
 
           <input
             type="email"
             placeholder="E-mail"
+            autoComplete="off"
+            value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
 
           <input
             type="password"
             placeholder="Senha"
+            autoComplete="new-password"
+            value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
 

@@ -1,6 +1,9 @@
 import React from 'react'
 
-export default function Dashboard({ secureMode }) {
+export default function Dashboard({
+  secureMode,
+  setLogged
+}) {
 
   return (
 
@@ -17,10 +20,19 @@ export default function Dashboard({ secureMode }) {
           {
             secureMode
               ? 'O sistema bloqueou SQL Injection.'
-              : 'O sistema está vulnerável a SQL Injection.'
+              : 'O sistema foi comprometido via SQL Injection.'
           }
 
         </p>
+
+        <button
+          className="logout-btn"
+          onClick={() => setLogged(false)}
+        >
+
+          Voltar ao Login
+
+        </button>
 
       </div>
 
