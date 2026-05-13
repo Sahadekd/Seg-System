@@ -37,13 +37,11 @@ No modo seguro, o sistema utiliza Prepared Statements (`$1`, `$2`) para impedir 
 
 Abra um terminal:
 
-```bash
 cd backend
 npm install
 node server.js
 
 http://localhost:4000
-```
 
 ---
 
@@ -51,13 +49,11 @@ http://localhost:4000
 
 Abra outro terminal:
 
-```bash
 cd frontend
 npm install
 npm run dev
 
 http://localhost:5173
-```
 
 ---
 
@@ -65,42 +61,24 @@ http://localhost:5173
 
 Credenciais válidas:
 
-## 📧 Email
-```text
+📧 Email
 admin@email.com
-```
 
-## 🔑 Senha
-```text
+🔑 Senha
 123456
-```
 
 ✅ Resultado esperado:
-```text
 Login realizado com sucesso.
-```
 
 ---
 
 # 💀 SQL Injection
 
-Payload utilizada:
-
-```sql
-' OR 1=1 --
-```
-
-## 📧 Email
-
-```text
+📧 Email
 admin@email.com
-```
 
-## 🔑 Senha
-
-```sql
+🔑 Senha
 ' OR 1=1 --
-```
 
 ---
 
@@ -126,9 +104,7 @@ A condição `OR 1=1` sempre retorna verdadeiro, permitindo o bypass da autentic
 
 Ao clicar em:
 
-```text
 Ativar Proteção
-```
 
 o sistema passa a utilizar Prepared Statements:
 
